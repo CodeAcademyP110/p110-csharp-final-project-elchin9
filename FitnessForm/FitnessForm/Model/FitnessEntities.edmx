@@ -1,0 +1,831 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FitnessModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cards">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="FitPack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PacketId" Type="int" />
+          <Property Name="ServiceId" Type="int" />
+        </EntityType>
+        <EntityType Name="NetRevenue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RevenueId" Type="int" />
+          <Property Name="ExpensesId" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="CardsId" Type="int" />
+          <Property Name="ServiceId" Type="int" />
+          <Property Name="PackedId" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Packets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Days" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Hours" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Revenues">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PriceId" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Time" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="HasVerifiedPassword" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Cards__CustomerI__4BAC3F29">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Cards" Type="Self.Cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cards">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FitPack__PacketI__4CA06362">
+          <End Role="Packets" Type="Self.Packets" Multiplicity="0..1" />
+          <End Role="FitPack" Type="Self.FitPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Packets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FitPack">
+              <PropertyRef Name="PacketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FitPack__Service__4D94879B">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="FitPack" Type="Self.FitPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FitPack">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NetRevenu__Expen__5DCAEF64">
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="0..1" />
+          <End Role="NetRevenue" Type="Self.NetRevenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expenses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetRevenue">
+              <PropertyRef Name="ExpensesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NetRevenu__Reven__5CD6CB2B">
+          <End Role="Revenues" Type="Self.Revenues" Multiplicity="0..1" />
+          <End Role="NetRevenue" Type="Self.NetRevenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revenues">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetRevenue">
+              <PropertyRef Name="RevenueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Cards__4F7CD00D">
+          <End Role="Cards" Type="Self.Cards" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cards">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="CardsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__4E88ABD4">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Packe__5165187F">
+          <End Role="Packets" Type="Self.Packets" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Packets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="PackedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Servi__5070F446">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__UserId__52593CB8">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Revenues__PriceI__5812160E">
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="0..1" />
+          <End Role="Revenues" Type="Self.Revenues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Revenues">
+              <PropertyRef Name="PriceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__RoleId__534D60F1">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FitnessModelStoreContainer">
+          <EntitySet Name="Cards" EntityType="Self.Cards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FitPack" EntityType="Self.FitPack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NetRevenue" EntityType="Self.NetRevenue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Packets" EntityType="Self.Packets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Revenues" EntityType="Self.Revenues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cards__CustomerI__4BAC3F29" Association="Self.FK__Cards__CustomerI__4BAC3F29">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cards" EntitySet="Cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FitPack__PacketI__4CA06362" Association="Self.FK__FitPack__PacketI__4CA06362">
+            <End Role="Packets" EntitySet="Packets" />
+            <End Role="FitPack" EntitySet="FitPack" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FitPack__Service__4D94879B" Association="Self.FK__FitPack__Service__4D94879B">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="FitPack" EntitySet="FitPack" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NetRevenu__Expen__5DCAEF64" Association="Self.FK__NetRevenu__Expen__5DCAEF64">
+            <End Role="Expenses" EntitySet="Expenses" />
+            <End Role="NetRevenue" EntitySet="NetRevenue" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NetRevenu__Reven__5CD6CB2B" Association="Self.FK__NetRevenu__Reven__5CD6CB2B">
+            <End Role="Revenues" EntitySet="Revenues" />
+            <End Role="NetRevenue" EntitySet="NetRevenue" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Cards__4F7CD00D" Association="Self.FK__OrderDeta__Cards__4F7CD00D">
+            <End Role="Cards" EntitySet="Cards" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__4E88ABD4" Association="Self.FK__OrderDeta__Order__4E88ABD4">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Packe__5165187F" Association="Self.FK__OrderDeta__Packe__5165187F">
+            <End Role="Packets" EntitySet="Packets" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Servi__5070F446" Association="Self.FK__OrderDeta__Servi__5070F446">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__UserId__52593CB8" Association="Self.FK__Orders__UserId__52593CB8">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Revenues__PriceI__5812160E" Association="Self.FK__Revenues__PriceI__5812160E">
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+            <End Role="Revenues" EntitySet="Revenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__RoleId__534D60F1" Association="Self.FK__Users__RoleId__534D60F1">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FitnessModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Cards__CustomerI__37A5467C" FromRole="Cards" ToRole="Customer" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Cards__3B75D760" FromRole="Cards" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cards" Relationship="Self.FK__Cards__CustomerI__37A5467C" FromRole="Customer" ToRole="Cards" />
+        </EntityType>
+        <EntityType Name="FitPack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PacketId" Type="Int32" />
+          <Property Name="ServiceId" Type="Int32" />
+          <NavigationProperty Name="Packet" Relationship="Self.FK__FitPack__PacketI__38996AB5" FromRole="FitPack" ToRole="Packets" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__FitPack__Service__398D8EEE" FromRole="FitPack" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="CardsId" Type="Int32" />
+          <Property Name="ServiceId" Type="Int32" />
+          <Property Name="PackedId" Type="Int32" />
+          <NavigationProperty Name="Card" Relationship="Self.FK__OrderDeta__Cards__3B75D760" FromRole="OrderDetails" ToRole="Cards" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__OrderDeta__Order__3A81B327" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Packet" Relationship="Self.FK__OrderDeta__Packe__440B1D61" FromRole="OrderDetails" ToRole="Packets" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__OrderDeta__Servi__3D5E1FD2" FromRole="OrderDetails" ToRole="Services" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Revenues" Relationship="FitnessModel.FK__Revenues__PriceI__5812160E" FromRole="OrderDetail" ToRole="Revenue" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__3A81B327" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Orders__UserId__3E52440B" FromRole="Orders" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Packet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Days" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Hours" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FitPacks" Relationship="Self.FK__FitPack__PacketI__38996AB5" FromRole="Packets" ToRole="FitPack" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Packe__440B1D61" FromRole="Packets" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__RoleId__3F466844" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Time" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FitPacks" Relationship="Self.FK__FitPack__Service__398D8EEE" FromRole="Services" ToRole="FitPack" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Servi__3D5E1FD2" FromRole="Services" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="HasVerifiedPassword" Type="Boolean" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UserId__3E52440B" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Users__RoleId__3F466844" FromRole="Users" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK__Cards__CustomerI__37A5467C">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Cards" Type="Self.Card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cards">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Cards__3B75D760">
+          <End Role="Cards" Type="Self.Card" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cards">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="CardsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FitPack__PacketI__38996AB5">
+          <End Role="Packets" Type="Self.Packet" Multiplicity="0..1" />
+          <End Role="FitPack" Type="Self.FitPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Packets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FitPack">
+              <PropertyRef Name="PacketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FitPack__Service__398D8EEE">
+          <End Role="Services" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="FitPack" Type="Self.FitPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FitPack">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__3A81B327">
+          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Packe__440B1D61">
+          <End Role="Packets" Type="Self.Packet" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Packets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="PackedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Servi__3D5E1FD2">
+          <End Role="Services" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__UserId__3E52440B">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__RoleId__3F466844">
+          <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FitnessEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cards" EntityType="Self.Card" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="FitPacks" EntityType="Self.FitPack" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Packets" EntityType="Self.Packet" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Cards__CustomerI__37A5467C" Association="Self.FK__Cards__CustomerI__37A5467C">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Cards" EntitySet="Cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Cards__3B75D760" Association="Self.FK__OrderDeta__Cards__3B75D760">
+            <End Role="Cards" EntitySet="Cards" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FitPack__PacketI__38996AB5" Association="Self.FK__FitPack__PacketI__38996AB5">
+            <End Role="Packets" EntitySet="Packets" />
+            <End Role="FitPack" EntitySet="FitPacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FitPack__Service__398D8EEE" Association="Self.FK__FitPack__Service__398D8EEE">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="FitPack" EntitySet="FitPacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__3A81B327" Association="Self.FK__OrderDeta__Order__3A81B327">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Packe__440B1D61" Association="Self.FK__OrderDeta__Packe__440B1D61">
+            <End Role="Packets" EntitySet="Packets" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Servi__3D5E1FD2" Association="Self.FK__OrderDeta__Servi__3D5E1FD2">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__UserId__3E52440B" Association="Self.FK__Orders__UserId__3E52440B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__RoleId__3F466844" Association="Self.FK__Users__RoleId__3F466844">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Expenses" EntityType="FitnessModel.Expens" />
+          <EntitySet Name="NetRevenues" EntityType="FitnessModel.NetRevenue" />
+          <EntitySet Name="Revenues" EntityType="FitnessModel.Revenue" />
+          <AssociationSet Name="FK__NetRevenu__Expen__5DCAEF64" Association="FitnessModel.FK__NetRevenu__Expen__5DCAEF64">
+            <End Role="Expens" EntitySet="Expenses" />
+            <End Role="NetRevenue" EntitySet="NetRevenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NetRevenu__Reven__5CD6CB2B" Association="FitnessModel.FK__NetRevenu__Reven__5CD6CB2B">
+            <End Role="Revenue" EntitySet="Revenues" />
+            <End Role="NetRevenue" EntitySet="NetRevenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Revenues__PriceI__5812160E" Association="FitnessModel.FK__Revenues__PriceI__5812160E">
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+            <End Role="Revenue" EntitySet="Revenues" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Expens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reason" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="NetRevenues" Relationship="FitnessModel.FK__NetRevenu__Expen__5DCAEF64" FromRole="Expens" ToRole="NetRevenue" />
+        </EntityType>
+        <EntityType Name="NetRevenue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RevenueId" Type="Int32" />
+          <Property Name="ExpensesId" Type="Int32" />
+          <NavigationProperty Name="Expens" Relationship="FitnessModel.FK__NetRevenu__Expen__5DCAEF64" FromRole="NetRevenue" ToRole="Expens" />
+          <NavigationProperty Name="Revenue" Relationship="FitnessModel.FK__NetRevenu__Reven__5CD6CB2B" FromRole="NetRevenue" ToRole="Revenue" />
+        </EntityType>
+        <EntityType Name="Revenue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PriceId" Type="Int32" />
+          <NavigationProperty Name="NetRevenues" Relationship="FitnessModel.FK__NetRevenu__Reven__5CD6CB2B" FromRole="Revenue" ToRole="NetRevenue" />
+          <NavigationProperty Name="OrderDetail" Relationship="FitnessModel.FK__Revenues__PriceI__5812160E" FromRole="Revenue" ToRole="OrderDetail" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="FK__NetRevenu__Expen__5DCAEF64">
+          <End Type="FitnessModel.Expens" Role="Expens" Multiplicity="0..1" />
+          <End Type="FitnessModel.NetRevenue" Role="NetRevenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expens">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetRevenue">
+              <PropertyRef Name="ExpensesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NetRevenu__Reven__5CD6CB2B">
+          <End Type="FitnessModel.Revenue" Role="Revenue" Multiplicity="0..1" />
+          <End Type="FitnessModel.NetRevenue" Role="NetRevenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revenue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetRevenue">
+              <PropertyRef Name="RevenueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Revenues__PriceI__5812160E">
+          <End Type="FitnessModel.OrderDetail" Role="OrderDetail" Multiplicity="0..1" />
+          <End Type="FitnessModel.Revenue" Role="Revenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Revenue">
+              <PropertyRef Name="PriceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FitnessModelStoreContainer" CdmEntityContainer="FitnessEntities">
+          <EntitySetMapping Name="Cards">
+            <EntityTypeMapping TypeName="FitnessModel.Card">
+              <MappingFragment StoreEntitySet="Cards">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="FitnessModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FitPacks">
+            <EntityTypeMapping TypeName="FitnessModel.FitPack">
+              <MappingFragment StoreEntitySet="FitPack">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PacketId" ColumnName="PacketId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="FitnessModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="CardsId" ColumnName="CardsId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="PackedId" ColumnName="PackedId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="FitnessModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Packets">
+            <EntityTypeMapping TypeName="FitnessModel.Packet">
+              <MappingFragment StoreEntitySet="Packets">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="FitnessModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="FitnessModel.Service">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FitnessModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="HasVerifiedPassword" ColumnName="HasVerifiedPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="FitnessModel.Expens">
+              <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NetRevenues">
+            <EntityTypeMapping TypeName="FitnessModel.NetRevenue">
+              <MappingFragment StoreEntitySet="NetRevenue">
+                <ScalarProperty Name="ExpensesId" ColumnName="ExpensesId" />
+                <ScalarProperty Name="RevenueId" ColumnName="RevenueId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Revenues">
+            <EntityTypeMapping TypeName="FitnessModel.Revenue">
+              <MappingFragment StoreEntitySet="Revenues">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PriceId" ColumnName="PriceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="d4eb458d50ee4fdf96e64f49f0b1f8be" Name="Diagram1">
+        <EntityTypeShape EntityType="FitnessModel.Card" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.Customer" Width="1.5" PointX="1.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.FitPack" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.OrderDetail" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.Order" Width="1.5" PointX="3.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.Packet" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.Role" Width="1.5" PointX="1.5" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.Service" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel.User" Width="1.5" PointX="1.5" PointY="12.5" IsExpanded="true" />
+        <AssociationConnector Association="FitnessModel.FK__Cards__CustomerI__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__OrderDeta__Cards__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__FitPack__PacketI__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__FitPack__Service__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__OrderDeta__Order__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__OrderDeta__Packe__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__OrderDeta__Servi__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__Orders__UserId__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessModel.FK__Users__RoleId__3F466844" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FitnessModel.Expens" Width="1.5" PointX="8.25" PointY="1.75" />
+        <EntityTypeShape EntityType="FitnessModel.NetRevenue" Width="1.5" PointX="10.5" PointY="4.75" />
+        <EntityTypeShape EntityType="FitnessModel.Revenue" Width="1.5" PointX="8.25" PointY="4.75" />
+        <AssociationConnector Association="FitnessModel.FK__NetRevenu__Expen__5DCAEF64" />
+        <AssociationConnector Association="FitnessModel.FK__NetRevenu__Reven__5CD6CB2B" />
+        <AssociationConnector Association="FitnessModel.FK__Revenues__PriceI__5812160E" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
